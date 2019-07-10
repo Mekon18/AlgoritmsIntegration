@@ -1,4 +1,4 @@
-import numpy as np
+﻿import numpy as np
 import matplotlib.cm as cm
 import matplotlib.pyplot as plt
 import copy
@@ -9,7 +9,7 @@ from app.models import FireflyPopulation, FireflyAgent
 
 
 def go(nturns, num_worms, influence_factor, max_jitter, start, end, function):
-    FireflyPopulation.objects.create(nturn = nturn, num_worms = num_worms,influence_factor=influence_factor, max_jitter=max_jitter, start=start,end=end, function=function)
+    FireflyPopulation.objects.create(nturns = nturns, num_worms = num_worms,influence_factor=influence_factor, max_jitter=max_jitter, start=start,end=end, function=function)
     if(function == 'Растригина'):
         fitness_function = rastrigin
     elif(function == 'Экли'):
