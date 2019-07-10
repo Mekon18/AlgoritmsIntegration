@@ -9,7 +9,7 @@ from app.models import FireflyPopulation, FireflyAgent
 
 
 def go(nturns, num_worms, influence_factor, max_jitter, start, end, function):
-    FireflyPopulation.object.create(nturn = nturn, num_worms = num_worms,influence_factor=influence_factor, max_jitter=max_jitter, start=start,end=end, function=function)
+    FireflyPopulation.objects.create(nturn = nturn, num_worms = num_worms,influence_factor=influence_factor, max_jitter=max_jitter, start=start,end=end, function=function)
     if(function == 'Растригина'):
         fitness_function = rastrigin
     elif(function == 'Экли'):
