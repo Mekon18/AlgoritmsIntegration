@@ -1,0 +1,65 @@
+{% extends "app/layout.html" %}
+{% load staticfiles %}
+{% block content %}
+<script>
+    //function send_request() {
+    //    $.ajax({
+    //        url: '/getNextMove',
+    //        type: 'get',
+    //        success: function (data) {
+    //            for (var i = 0; i < $('#field').children().length; i++) {
+    //                var translate = $(data).children('#' + i.toString()).css('transform');
+    //                $('#' + i.toString()).css('transform', translate );
+    //            };
+    //            $('#best').text($(data).children('#best').text());
+    //        },
+    //        failure: function (data) {
+    //            alert('Got an error');
+    //        }        
+    //    });
+    //}
+    var iteration = 1;
+    $(document).ready(function () {
+        var timerId = setInterval(function () {
+            var trline = $(`#${iteration}.tr`);
+            for (var i = 0; i < trline.children().length; i++) {
+
+                var translate = trline.children("#"+i).html();
+                    $('#' + i.toString()).css('transform', translate );
+            };
+            iteration++;
+        }, 1500);
+    });
+</script>
+
+<div id="field"position: absolute; style="background-image:url({% static 'flowers.jpg' %}); width:525px; height:525px; ">
+
+    {% for j in iterations.0 %} 
+        <img src="{% static 'Pchela.png' %}" id="{{forloop.counter0}}" style="transform:translate({{ j.0 }}px,{{ j.1 }}px); position: absolute; height:25px; width:25px;  transition-duration:1s;"/> 
+    {% endfor %}
+
+</div>
+<div id="best">X:{{best.position.0}} Y:{{best.position.1}} Z:{{best.fitness}}</div>
+
+ <form method="POST">
+        {% csrf_token %}
+<div>
+    <table>
+        {{ form }}
+    </table>
+</div>
+     <input type="submit" value="Input">
+     </form>
+
+
+<table hidden id="iterations">
+    {% for i in iterations %}
+    <tr class="tr" id="{{forloop.counter0}}">
+       {% for j in i %}
+        <td id="{{forloop.counter0}}">translate({{ j.0 }}px,{{ j.1 }}px)</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

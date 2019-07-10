@@ -1,0 +1,16 @@
+{% extends "Fireflies/wrapper.html" %}
+{% load staticfiles %}
+{% block wrapper %}
+
+    <p>
+        <a href="/" class="btn btn-success btn-lg">Главная страница</a>
+    </p>
+{% for val in values %}
+<p>{{val}}</p>
+{% endfor %}
+    <iframe src="animation" name="" width="650" height="590" frameborder="0" scrolling="yes">
+    </iframe>
+    <p>X = {{result.0}}</p>
+    <p>Y = {{result.1}}</p>
+    <p>Z = {{result.2}}</p>
+{% endblock %}

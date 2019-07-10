@@ -1,0 +1,104 @@
+{% extends "app/layout.html" %}
+{% load staticfiles %}
+{% block content %}
+<div style="display:none;">
+{% load static %}
+<img id="antUp" width="20" height="20"
+src="{% static "up.png" %}" alt="Ant">
+<img id="antRight" width="20" height="20"
+src="{% static "right.png" %}" alt="Ant">
+<img id="antDown" width="20" height="20"
+src="{% static "down.png" %}" alt="Ant">
+<img id="antLeft" width="20" height="20"
+src="{% static "left.png" %}" alt="Ant">
+</div>
+
+<canvas id="myCanvas" width="600" height="600"
+style="border:1px solid #c3c3c3;">
+Your browser does not support the canvas element.
+</canvas>
+
+<p id = "myMatrix">
+</p>
+	<form method="GET" >
+            {% csrf_token %}
+		<table>
+			{{ form }}
+		</table>
+		<input type="submit" value="Send">
+	</form>
+	
+<script>
+scale = 6;
+var imgUp = document.getElementById("antUp");
+var imgRight = document.getElementById("antRight");
+var imgDown = document.getElementById("antDown");
+var imgLeft = document.getElementById("antLeft");
+
+    
+
+function drawPoint(pointStatus, ctx, i, j){
+		switch (pointStatus){
+		case "spawn":
+			ctx.fillStyle = "blue";
+			ctx.fillRect(scale*i,scale*j,scale,scale);
+			break;
+		case "food":
+			ctx.fillStyle = "red";
+			ctx.fillRect(scale*i,scale*j,scale,scale);
+			break;
+		case "obstacle":
+			ctx.fillStyle = "aqua";
+			ctx.fillRect(scale*i,scale*j,scale,scale);
+			break;
+		case "antUp":
+			ctx.drawImage(imgUp, scale*i, scale*j);
+			break;
+		case "antRight":
+			ctx.drawImage(antRight, scale*i, scale*j);
+			break;
+		case "antDown":
+			ctx.drawImage(antDown, scale*i, scale*j);
+			break;
+		case "antLeft":
+			ctx.drawImage(antLeft, scale*i, scale*j);
+			break;
+		default:
+			ctx.fillStyle = "white";
+			ctx.fillRect(scale*i,scale*j,scale,scale);   
+	}
+}
+
+    function send_request() {
+        $.ajax({
+            url: '/getNextMove/',
+            type: 'get',
+            success: function (data) {
+                var canvas = document.getElementById("myCanvas");
+                var ctx = canvas.getContext("2d");
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (var i = 0; i < $(data).children().children().length; i++) {
+                    var line = $(data).children().children("#" + i);
+                    for (var j = 0; j < line.children().length; j++) {
+                        var item = line.children(`#${i}-${j}`);
+                        drawPoint(item.text(), ctx, i, j);
+                    }                    
+                }                
+            },
+            failure: function (data) {
+                alert('Got an error');
+            }        
+        });
+    }
+
+function drawMatrix(){
+  matrixSocket.send(JSON.stringify({'counter': 1}));
+ ctx2.drawImage(img, 30, 30);
+}
+
+setInterval(send_request, 500);
+
+
+
+</script>
+{% endblock %}

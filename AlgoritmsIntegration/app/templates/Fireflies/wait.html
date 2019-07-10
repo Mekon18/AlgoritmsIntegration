@@ -1,0 +1,12 @@
+{% extends "Fireflies/wrapper.html" %}
+{% load staticfiles %}
+{% block wrapper %}
+
+    <p>
+        <a href="/" class="btn btn-success btn-lg">Главная страница</a>
+    </p>
+    <h4>Пожалуйста подождите</h4>
+    <script>
+        onload = function () {setTimeout ("document.location = '/result/';", 1000)}
+    </script>
+{% endblock %}

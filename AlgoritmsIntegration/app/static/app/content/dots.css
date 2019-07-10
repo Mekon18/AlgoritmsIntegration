@@ -1,0 +1,10 @@
+#c {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+.jumbotron {
+    background: none;
+    color: #D1D6C2;
+}

@@ -1,0 +1,19 @@
+{% extends "app/layout.html" %}
+{% load staticfiles %}
+{% block content %}
+
+<ul class="nav navbar-nav">
+    <li><a href="{% url 'bees' %}">Bees</a></li>
+    <li><a href="{% url 'fishes' %}">Fish</a></li>
+    <li><a href="{% url 'fireflies' %}">Fireflies</a></li>
+    <li><a href="{% url 'ants' %}">Ants</a></li>
+</ul>
+<!--<table background="{% static 'theBoys.png' %}" style="background-size:100% 100%">
+    <tr>
+        <td class="boy" width="240px"><a class="boy-a" href="{% url 'ants' %}" title="ants"></a></td>
+        <td class="boy" width="240px"><a class="boy-a" href="{% url 'fishes' %}"  title="fishes"></a></td>
+        <td class="boy" width="257px"><a class="boy-a" href="{% url 'fireflies' %}"  title="fireflies"></a></td>
+        <td class="boy" width="257px"><a class="boy-a" href="{% url 'bees' %}"  title="bees"></a></td>
+    </tr>
+</table>-->
+{% endblock %}

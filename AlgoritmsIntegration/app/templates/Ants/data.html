@@ -1,0 +1,11 @@
+﻿<table>
+    {% for line in matrix %}
+        {% with forloop.counter0 as i %}
+        <tr id="{{i}}">
+            {% for column in line %}
+                <td id="{{i}}-{{forloop.counter0}}">{{column}}</td>
+            {% endfor %}
+        {% endwith %}
+        </tr>
+    {% endfor %}
+</table>
