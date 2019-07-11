@@ -210,6 +210,7 @@ def wait(request):
         start = float(request.POST.get('start', ''))
         end = float(request.POST.get('end', ''))
         function = request.POST.get('function', '')
+        params = FireflyPopulation.objects.create(nturns = nturns, num_worms = num_worms,influence_factor=influence_factor, max_jitter=max_jitter, start=start,end=end, function=function)
         population = FireflyPopulation.objects.last()
     return render(request, 'Fireflies/wait.html', {'params' : [population.num_worms, population.nturns]})
 
