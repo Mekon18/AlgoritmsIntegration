@@ -202,21 +202,21 @@ function = ''
 
 
 def wait(request):
-    global nturns, num_worms, influence_factor, max_jitter, start, end, function
-    nturns = request.POST.get('nturns', '')
-    num_worms = request.POST.get('num_worms', '')
-    influence_factor = request.POST.get('influence_factor', '')
-    max_jitter = request.POST.get('max_jitter', '')
-    start = request.POST.get('start', '')
-    end = request.POST.get('end', '')
-    function = request.POST.get('function', '')
+    if request.method == "POST": 
+        global nturns, num_worms, influence_factor, max_jitter, start, end, function
+        nturns = int(request.POST.get('nturns', ''))
+        num_worms = int(request.POST.get('num_worms', ''))
+        influence_factor = float(request.POST.get('influence_factor', ''))
+        max_jitter = float(request.POST.get('max_jitter', ''))
+        start = float(request.POST.get('start', ''))
+        end = float(request.POST.get('end', ''))
+        function = request.POST.get('function', '')
     return render(request, 'Fireflies/wait.html')
 
 def result(request):
     #form = ParamForm(request.POST)
     #if request.method == "POST": #and form.is_valid():
-    global nturns, num_worms, influence_factor, max_jitter, start, end, function
-    results = go(int(nturns), int(num_worms), int(influence_factor), float(max_jitter), float(start), float(end), function)
+    results = go(nturns, num_worms, influence_factor, max_jitter, start, end, function)
 
     return render(request, 'Fireflies/basic.html', {'values' : ['Функция ' + function], 'result' : results})
 
