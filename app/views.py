@@ -210,11 +210,12 @@ def wait(request):
         start = float(request.POST.get('start', ''))
         end = float(request.POST.get('end', ''))
         function = request.POST.get('function', '')
-    return render(request, 'Fireflies/wait.html')
+    return render(request, 'Fireflies/wait.html', {'params' : [nturns, num_worms, influence_factor, max_jitter, start, end, function]})
 
 def result(request):
     #form = ParamForm(request.POST)
     #if request.method == "POST": #and form.is_valid():
+    param = request.POST.get('params', '')
     results = go(nturns, num_worms, influence_factor, max_jitter, start, end, function)
 
     return render(request, 'Fireflies/basic.html', {'values' : ['Функция ' + function], 'result' : results})

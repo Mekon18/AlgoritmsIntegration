@@ -6,6 +6,9 @@
         <a href="/fireflies/" class="btn btn-success btn-lg">Главная страница</a>
     </p>
     <h4>Пожалуйста подождите</h4>
+    {% for val in params %}
+        <p>{{val}}</p>
+    {% endfor %}
     <script>
         onload = function () {setTimeout ("document.location = '/result/';", 1000)}
     </script>
