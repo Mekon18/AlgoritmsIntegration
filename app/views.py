@@ -202,15 +202,14 @@ function = ''
 
 
 def wait(request):
-    if request.method == "POST": 
-        global nturns, num_worms, influence_factor, max_jitter, start, end, function
-        nturns = request.POST.get('nturns', '')
-        num_worms = request.POST.get('num_worms', '')
-        influence_factor = request.POST.get('influence_factor', '')
-        max_jitter = request.POST.get('max_jitter', '')
-        start = request.POST.get('start', '')
-        end = request.POST.get('end', '')
-        function = request.POST.get('function', '')
+    global nturns, num_worms, influence_factor, max_jitter, start, end, function
+    nturns = request.POST.get('nturns', '')
+    num_worms = request.POST.get('num_worms', '')
+    influence_factor = request.POST.get('influence_factor', '')
+    max_jitter = request.POST.get('max_jitter', '')
+    start = request.POST.get('start', '')
+    end = request.POST.get('end', '')
+    function = request.POST.get('function', '')
     return render(request, 'Fireflies/wait.html')
 
 def result(request):
