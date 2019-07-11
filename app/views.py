@@ -188,10 +188,6 @@ def fishes(request):
         return render(request, "Fishes/FSS.html", {"form": userform})
 
 #fireflies
-def fireflies(request):
-    #form = ParamForm(request.POST or None)
-    return render(request, 'Fireflies/homePage.html', locals())
-
 nturns = 0
 num_worms = 0
 influence_factor = 0
@@ -199,6 +195,9 @@ max_jitter = 0
 start = 0
 end =0 
 function = ''
+def fireflies(request):
+    #form = ParamForm(request.POST or None)
+    return render(request, 'Fireflies/homePage.html', locals())
 
 
 def wait(request):
