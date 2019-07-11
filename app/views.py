@@ -215,10 +215,10 @@ def wait(request):
 def result(request):
     #form = ParamForm(request.POST)
     #if request.method == "POST": #and form.is_valid():
-    param = request.POST.get('params', '')
+    params = request.POST.get('params', '')
     results = go(nturns, num_worms, influence_factor, max_jitter, start, end, function)
 
-    return render(request, 'Fireflies/basic.html', {'values' : ['Функция ' + function], 'result' : results})
+    return render(request, 'Fireflies/basic.html', {'values' : ['Функция ' + function], 'result' : results, 'params': params})
 
 def animation(request):
     return render(request, 'Fireflies/animation.html')
