@@ -211,7 +211,7 @@ def wait(request):
         end = float(request.POST.get('end', ''))
         function = request.POST.get('function', '')
         population = FireflyPopulation.objects.last()
-    return render(request, 'Fireflies/wait.html', {'params' : [num_worms]})
+    return render(request, 'Fireflies/wait.html', {'params' : [population.num_worms]})
 
 def result(request):
     #form = ParamForm(request.POST)
