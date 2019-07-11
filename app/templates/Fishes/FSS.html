@@ -28,41 +28,39 @@
 </div>
 
 <img src="{% static 'water.jpg' %}" style="opacity : 0.7;position: fixed; left:0px; top:0px; width:100%">
+<div>
+    <div style="width:700px; height:700px;position: absolute;left: 300px;">
+        <img src="{% static 'water.jpg' %}" style="width:700px; height:700px">
+        <div id="sea">
+            {% for pos in positions.0 %}
+    {#            <img src="{% static 'FSSWeb/1234.png' %}" id = "{{ forloop.counter0 }}"  width="30" height="30" style="left:{{ pos.X }}px;top:{{ pos.Y }}px;position: absolute;transition-duration:1s; z-index: 2">#}
+                <img src="{% static 'shark.gif' %}" id = "{{ forloop.counter0 }}"  width="50" height="30" style="left:{{ pos.X }}px;top:{{ pos.Y }}px;position: absolute;transition-duration:1s; z-index: 2">
+            {% endfor %}
+        </div>
 
-<div style="width:700px; height:700px;position: absolute;left: 300px;">
-    <img src="{% static 'water.jpg' %}" style="width:700px; height:700px">
-    <div id="sea">
-        {% for pos in positions.0 %}
-{#            <img src="{% static 'FSSWeb/1234.png' %}" id = "{{ forloop.counter0 }}"  width="30" height="30" style="left:{{ pos.X }}px;top:{{ pos.Y }}px;position: absolute;transition-duration:1s; z-index: 2">#}
-            <img src="{% static 'shark.gif' %}" id = "{{ forloop.counter0 }}"  width="50" height="30" style="left:{{ pos.X }}px;top:{{ pos.Y }}px;position: absolute;transition-duration:1s; z-index: 2">
-        {% endfor %}
+        <div id="eat">
+            {% for XY_pos in positions %}
+                {% with forloop.counter0 as count %}
+                    {% for pos in XY_pos %}
+                        <div
+                            id="eat_{{ count }}_{{ forloop.counter0 }}" style="opacity : 1 ;position: absolute;left:{{ pos.X }}px;top:{{ pos.Y }}px;z-index:1">
+                            <img src="{% static 'fish-animation-1.gif' %}" style="height: 10px;width: 10px">
+                        </div>
+                    {% endfor %}
+                {% endwith %}
+            {% endfor %}
+        </div>
     </div>
 
-    <div id="eat">
-        {% for XY_pos in positions %}
-            {% with forloop.counter0 as count %}
-                {% for pos in XY_pos %}
-                    <div
-{#                       id="eat_{{ count }}_{{ forloop.counter0 }}" style="opacity : 100 ;position: absolute;height: 3px;width: 3px;border-radius: 50%;background-color: red;left:{{ pos.X }}px;top:{{ pos.Y }}px;z-index:1">#}
-                        id="eat_{{ count }}_{{ forloop.counter0 }}" style="opacity : 1 ;position: absolute;left:{{ pos.X }}px;top:{{ pos.Y }}px;z-index:1">
-                        <img src="{% static 'fish-animation-1.gif' %}" style="height: 10px;width: 10px">
-                    </div>
-                {% endfor %}
-            {% endwith %}
-        {% endfor %}
+    <div style="position: absolute; opacity : 0.7; top: 75px;left:0px;">
+        <form method="POST">
+            {% csrf_token %}
+            <table>
+                {{ form }}
+            </table>
+           <input type="submit" value="OK" >
+        </form>
     </div>
-</div>
-
-
-
-<div style="position: absolute; opacity : 0.7; top: 0px;left:0px;">
-    <form method="POST">
-        {% csrf_token %}
-        <table>
-            {{ form }}
-        </table>
-       <input type="submit" value="OK" >
-    </form>
 </div>
 
 {% endblock %}
