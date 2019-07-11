@@ -192,7 +192,7 @@ def fireflies(request):
     #form = ParamForm(request.POST or None)
     return render(request, 'Fireflies/homePage.html', locals())
 
-nturn = 0
+nturns = 0
 num_worms = 0
 influence_factor = 0
 max_jitter = 0
