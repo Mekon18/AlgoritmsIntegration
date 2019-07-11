@@ -209,7 +209,7 @@ def result(request):
     #form = ParamForm(request.POST)
     #if request.method == "POST": #and form.is_valid():
     population = FireflyPopulation.objects.last()
-    results = go(population.nturns, population.num_worms, population.influence_factor, population.max_jitter, population.start, population.end, population.function)
+    results = go(population.nturns, population.num_worms, population.influence_factor, population.max_jitter, population.start, population.end, population.function, population)
 
     return render(request, 'Fireflies/basic.html', {'values' : ['Функция ' + function], 'result' : results})
 
