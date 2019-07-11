@@ -188,13 +188,6 @@ def fishes(request):
         return render(request, "Fishes/FSS.html", {"form": userform})
 
 #fireflies
-nturns = 0
-num_worms = 0
-influence_factor = 0
-max_jitter = 0
-start = 0
-end =0 
-function = ''
 def fireflies(request):
     #form = ParamForm(request.POST or None)
     return render(request, 'Fireflies/homePage.html', locals())
@@ -202,7 +195,6 @@ def fireflies(request):
 
 def wait(request):
     if request.method == "POST": 
-        global nturns, num_worms, influence_factor, max_jitter, start, end, function
         nturns = int(request.POST.get('nturns', ''))
         num_worms = int(request.POST.get('num_worms', ''))
         influence_factor = float(request.POST.get('influence_factor', ''))
@@ -211,16 +203,15 @@ def wait(request):
         end = float(request.POST.get('end', ''))
         function = request.POST.get('function', '')
         params = FireflyPopulation.objects.create(nturns = nturns, num_worms = num_worms,influence_factor=influence_factor, max_jitter=max_jitter, start=start,end=end, function=function)
-        population = FireflyPopulation.objects.last()
-    return render(request, 'Fireflies/wait.html', {'params' : [population.num_worms, population.nturns]})
+    return render(request, 'Fireflies/wait.html', {'params' : [nturns, num_worms, influence_factor, max_jitter, start, end, function]})
 
 def result(request):
     #form = ParamForm(request.POST)
     #if request.method == "POST": #and form.is_valid():
-    params = request.POST.get('params', '')
-    results = go(nturns, num_worms, influence_factor, max_jitter, start, end, function)
+    population = FireflyPopulation.objects.last()
+    results = go(population.nturns, population.num_worms, population.influence_factor, population.max_jitter, population.start, population.end, population.function)
 
-    return render(request, 'Fireflies/basic.html', {'values' : ['Функция ' + function], 'result' : results, 'params': params})
+    return render(request, 'Fireflies/basic.html', {'values' : ['Функция ' + function], 'result' : results})
 
 def animation(request):
     return render(request, 'Fireflies/animation.html')
