@@ -216,7 +216,7 @@ def wait(request):
 def result(request):
     #form = ParamForm(request.POST)
     #if request.method == "POST": #and form.is_valid():
-    
+    global nturns, num_worms, influence_factor, max_jitter, start, end, function
     results = go(int(nturns), int(num_worms), int(influence_factor), float(max_jitter), float(start), float(end), function)
 
     return render(request, 'Fireflies/basic.html', {'values' : ['Функция ' + function], 'result' : results})
