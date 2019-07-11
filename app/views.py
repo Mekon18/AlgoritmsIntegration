@@ -211,7 +211,7 @@ def result(request):
     population = FireflyPopulation.objects.last()
     results = go(population.nturns, population.num_worms, population.influence_factor, population.max_jitter, population.start, population.end, population.function, population)
 
-    return render(request, 'Fireflies/basic.html', {'values' : ['Функция ' + function], 'result' : results})
+    return render(request, 'Fireflies/basic.html', {'values' : ['Функция ' + population.function, 'result' : results})
 
 def animation(request):
     return render(request, 'Fireflies/animation.html')
