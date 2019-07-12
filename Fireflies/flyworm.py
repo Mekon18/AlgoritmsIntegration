@@ -8,8 +8,8 @@ from Fireflies.turn import *
 from app.models import FireflyPopulation, FireflyAgent
 
 
-def go(nturns, num_worms, influence_factor, max_jitter, start, end, function):
-    params = FireflyPopulation.objects.create(nturns = nturns, num_worms = num_worms,influence_factor=influence_factor, max_jitter=max_jitter, start=start,end=end, function=function)
+def go(nturns, num_worms, influence_factor, max_jitter, start, end, function, population):
+    #params = FireflyPopulation.objects.create(nturns = nturns, num_worms = num_worms,influence_factor=influence_factor, max_jitter=max_jitter, start=start,end=end, function=function)
     if(function == 'Растригина'):
         fitness_function = rastrigin
     elif(function == 'Экли'):
@@ -56,7 +56,7 @@ def go(nturns, num_worms, influence_factor, max_jitter, start, end, function):
     def Save(flyworms, colors):
         for i in range(nturns):
             for j in range(num_worms):
-                FireflyAgent.objects.create(x = flyworms[i][j, 0], y = flyworms[i][j, 1], z = colors[i][j], population_id = params, agent_id = j)
+                FireflyAgent.objects.create(x = flyworms[i][j, 0], y = flyworms[i][j, 1], z = colors[i][j], population_id = population, agent_id = j)
     Save(flyworms, colors)
 
     def an(i):
