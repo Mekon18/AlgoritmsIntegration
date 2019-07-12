@@ -140,28 +140,6 @@ def fishes(request):
 
         SaveSQL(iter, fish, weightMax, speed, function, MinX, MaxX, MinY, MaxY, error , coords)
 
-
-        #weightMax0 = 10
-        #for f in range(5):
-        #    for i in range(10):
-        #        wb = openpyxl.load_workbook('static/Test.xlsx', read_only=False)
-        #        # wb1 = openpyxl.load_workbook('static/Test1.xlsx', read_only=False)
-        #        speed0 = 0.1
-        #        for j in range(10):
-        #            coords = FSS.Run(iter, fish, weightMax0, speed0, f, MinX, MaxX, MinY, MaxY)
-        #            # wb.create_sheet(title='Лист' + str(i + 1), index=0)
-        #            # wb1.create_sheet(title='Лист' + str(i + 1), index=0)
-        #            sheet = wb['Лист' + str(j + 1)]
-        #            # sheet1 = wb1['Лист' + str(j + 1)]
-        #            for i in range(iter):
-        #                for j in range(fish):
-        #                    sheet.cell(row=i + 1, column=j + 1).value = coords[i][j].Z
-        #                    # sheet1.cell(row=i + 1, column=j + 1).value = coords[i][j].weight
-        #            speed0 += 0.1
-        #        wb.save('static/Результаты/Test_' + str(f) + '_' + str(weightMax0) + '.xlsx')
-        #        # wb1.save('static/Результаты/Test1_' + str(function) + '_' + str(weightMax0) + '.xlsx')
-        #        weightMax0 += 10
-
         MinZ = coords[iter - 1][0].Z
 
         for i in range(fish):
@@ -182,10 +160,46 @@ def fishes(request):
                 result_coords[i][j].X = int((result_coords[i][j].X - MinX) * kX)
                 result_coords[i][j].Y = int((result_coords[i][j].Y - MinY) * kY)
 
-        result = {'positions' : result_coords, 'min_result' : min, "form": FishForm(userform)}
-        return render(request, 'Fishes/FSS.html', context = result)
+        if request.POST.get("DownLoad") == 'on':
+            response = download(request, iter, fish, weightMax, speed, function, MinX, MaxX, MinY, MaxY, error, coords)
+            return response
+        else:
+            result = {'positions': result_coords, 'min_result': min, "form": FishForm(userform)}
+            return render(request, 'FSSWeb/FSS.html', context=result)
+
     else:
         return render(request, "Fishes/FSS.html", {"form": userform})
+
+def download(request, iter, fish, weightMax, speed, function, MinX, MaxX, MinY, MaxY, error, coords):
+    wb = openpyxl.Workbook()
+    wb.create_sheet("X")
+    wb.create_sheet("Y")
+    wb.create_sheet("Z")
+    sheet1 = wb['X']
+    sheet2 = wb['Y']
+    sheet3 = wb['Z']
+    for i in range(iter):
+        for j in range(fish):
+            sheet1.cell(row=i + 1, column=j + 1).value = coords[i][j].X
+            sheet2.cell(row=i + 1, column=j + 1).value = coords[i][j].Y
+            sheet3.cell(row=i + 1, column=j + 1).value = coords[i][j].Z
+    wb.save(str(iter) + '_' + str(fish) + '_' + str(weightMax) + '_' + str(speed) + '_' + str(function) + '_' + str(
+        MinX) + '_' + str(MaxX) + '_' + str(MinY) + '_' + str(MaxY) + '_' + str(error) + '.xlsx')
+
+    file_name = str(iter) + '_' + str(fish) + '_' + str(weightMax) + '_' + str(speed) + '_' + str(
+        function) + '_' + str(
+        MinX) + '_' + str(MaxX) + '_' + str(MinY) + '_' + str(MaxY) + '_' + str(error)
+
+    if os.path.exists(file_name + '.xlsx'):
+        fsock = open(file_name + '.xlsx', "rb")
+
+        response = HttpResponse(fsock, content_type='application/vnd.ms-excel')
+        response['Content-Disposition'] = 'attachment; filename =' + file_name + '.xls'
+
+        fsock.close()
+        os.remove(file_name + '.xlsx')
+
+        return response
 
 #fireflies
 def fireflies(request):

@@ -38,6 +38,7 @@ class FishForm(forms.Form):
     MaxY = forms.FloatField(min_value = -9999, max_value = 9999, initial = 6)
     error = forms.FloatField(min_value = -9999, max_value = 9999, initial= 0.5)
     function =  forms.ChoiceField(choices = ((1, "Химмельблау"), (2, "Розенброка"), (3, "Сфера"),(4, "Растригина"), (5, "Экли")), initial = 1)
+    DownLoad = forms.BooleanField(required=False)
 
 class AntsForm(forms.Form):
     model = const
