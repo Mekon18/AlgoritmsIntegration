@@ -165,7 +165,7 @@ def fishes(request):
             return response
         else:
             result = {'positions': result_coords, 'min_result': min, "form": FishForm(userform)}
-            return render(request, 'FSSWeb/FSS.html', context=result)
+            return render(request, 'Fishes/FSS.html', context=result)
 
     else:
         return render(request, "Fishes/FSS.html", {"form": userform})
