@@ -18,6 +18,7 @@ from Ants.model_ant import Ant
 from Ants.model_field import Field
 from Ants.model_const import Const
 from .models import *
+import openpyxl
 
 def home(request):
     """Renders the home page."""
