@@ -20,6 +20,7 @@ from Ants.model_const import Const
 from .models import *
 import openpyxl
 import os
+from django.http import HttpResponse
 
 def home(request):
     """Renders the home page."""
